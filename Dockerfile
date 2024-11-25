@@ -3,9 +3,8 @@ FROM ubuntu:24.04
 RUN apt-get update && \
     apt-get install -qy git && \
     apt-get install -qy openssh-server && \
-    sed i 's|session required pam_loginuid.so|session optional pam_loginud.so|g' /etc/pam.d/sshd && \
+    sed -i 's|session required pam_loginuid.so|session optional pam_loginud.so|g' /etc/pam.d/sshd && \
     mkdir -p /var/run/sshd && \
-
     apt-get install -qy openjdk-17-jdk openjdk-17-jre && \
     apt-get -qy autoremove && \
     adduser --quiet jenkins && \
@@ -18,4 +17,5 @@ RUN chown -R jenkins:jenkins /home/jenkins/.m2/ && \
     chown -R jenkins:jenkins /home/jenkins/.ssh/
 
 EXPOSE 22
+
 CMD ["/usr/sbin/sshd", "-D"]
