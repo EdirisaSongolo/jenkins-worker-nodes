@@ -9,7 +9,7 @@ RUN apt-get update && \
     apt-get -qy autoremove && \
     adduser --quiet jenkins && \
     echo "jenkins:password" | chpasswd && \
-    mkdir /hom/jenkins/.m2
+    mkdir /home/jenkins/.m2
 
 COPY .ssh/authorized_keys /home/jenkins/.ssh/authorized_keys
 
