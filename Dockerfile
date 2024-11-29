@@ -6,7 +6,8 @@ RUN apt-get update && \
     sed -i 's|session required pam_loginuid.so|session optional pam_loginud.so|g' /etc/pam.d/sshd && \
     mkdir -p /var/run/sshd && \
     apt-get install -qy openjdk-17-jdk openjdk-17-jre && \
-    apt-get install -qy docker-ce docker-ce-cli containerd.io docker-compose-plugin && \
+    apt-get install -qy docker.io && \
+    apt -get install -qy docker-compose-plugin && \
     apt-get -qy autoremove && \
     adduser --quiet jenkins && \
     echo "jenkins:password" | chpasswd && \
