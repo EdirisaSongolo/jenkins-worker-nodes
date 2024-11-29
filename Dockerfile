@@ -6,8 +6,14 @@ RUN apt-get update && \
     sed -i 's|session required pam_loginuid.so|session optional pam_loginud.so|g' /etc/pam.d/sshd && \
     mkdir -p /var/run/sshd && \
     apt-get install -qy openjdk-17-jdk openjdk-17-jre && \
-    apt-get install -qy docker.io && \
-    apt-get install -qy docker-compose-plugin && \
+    apt-get install -y ca-certificates curl gnupg lsb-release && \
+    mkdir -p /etc/apt/keyrings && \
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg && \
+    echo  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null && \
+    apt-get update && \
+    apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin && \
+    curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && \
+    chmod +x /usr/local/bin/docker-compose && \
     apt-get -qy autoremove && \
     adduser --quiet jenkins && \
     echo "jenkins:password" | chpasswd && \
