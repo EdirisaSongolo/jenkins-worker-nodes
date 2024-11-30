@@ -1,8 +1,8 @@
 FROM ubuntu:24.04
 
+RUN apt-get update
 RUN apt-get install -y sudo
 RUN sudo -i
-RUN sudo apt-get update
 RUN sudo apt-get install -y ca-certificates curl gnupg
 RUN sudo apt-get install -qy git
 RUN sudo apt-get install -qy openssh-server && \
