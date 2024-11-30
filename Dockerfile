@@ -1,22 +1,14 @@
 FROM ubuntu:24.04
 
 RUN apt-get update
-RUN apt-get install -y sudo
-RUN sudo -i
-RUN sudo apt-get install -y ca-certificates curl gnupg
-RUN sudo apt-get install -qy git
-RUN sudo apt-get install -qy openssh-server && \
+RUN apt-get install -y ca-certificates curl gnupg
+RUN apt-get install -qy git
+RUN apt-get install -qy openssh-server && \
     sed -i 's|session required pam_loginuid.so|session optional pam_loginud.so|g' /etc/pam.d/sshd && \
     mkdir -p /var/run/sshd
-RUN sudo apt-get install -qy openjdk-17-jdk openjdk-17-jre
-RUN sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-RUN sudo echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list
-RUN sudo apt-get update
-RUN sudo apt-get install -y docker-ce docker-ce-cli containerd.io
-RUN curl -L "https://github.com/docker/compose/releases/download/2.30.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-RUN chmod +x /usr/local/bin/docker-compose
-RUN sudo apt-get -qy autoremove
-RUN sudo adduser --quiet jenkins && \
+RUN apt-get install -qy openjdk-17-jdk openjdk-17-jre
+RUN apt-get -qy autoremove
+RUN adduser --quiet jenkins && \
     echo "jenkins:password" | chpasswd && \
     mkdir /home/jenkins/.m2
 
@@ -27,4 +19,6 @@ RUN chown -R jenkins:jenkins /home/jenkins/.m2/ && \
 
 EXPOSE 22
 
-CMD ["/usr/sbin/sshd", "dockerd", "-D"]
+VOLUME ["/var/run/docker.sock"]
+
+CMD ["/usr/sbin/sshd", "-D"]
