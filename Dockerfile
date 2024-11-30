@@ -15,7 +15,6 @@ RUN sudo apt-get update
 RUN sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 RUN curl -L "https://github.com/docker/compose/releases/download/2.30.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 RUN chmod +x /usr/local/bin/docker-compose
-RUN sudo systemctl enable docker
 RUN sudo apt-get -qy autoremove
 RUN sudo adduser --quiet jenkins && \
     echo "jenkins:password" | chpasswd && \
@@ -28,4 +27,4 @@ RUN chown -R jenkins:jenkins /home/jenkins/.m2/ && \
 
 EXPOSE 22
 
-CMD ["/usr/sbin/sshd", "docker", "d", "-D"]
+CMD ["/usr/sbin/sshd", "dockerd", "-D"]
