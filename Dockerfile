@@ -10,12 +10,12 @@ RUN sudo apt-get install -qy openssh-server && \
     mkdir -p /var/run/sshd
 RUN sudo apt-get install -qy openjdk-17-jdk openjdk-17-jre
 RUN sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-RUN sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+RUN sudo echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list
 RUN sudo apt-get update
 RUN sudo apt-get install -y docker-ce docker-ce-cli containerd.io
-RUN sudo systemctl enable docker && systemctl start docker
 RUN curl -L "https://github.com/docker/compose/releases/download/2.30.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 RUN chmod +x /usr/local/bin/docker-compose
+RUN sudo systemctl enable docker && systemctl start docker
 RUN sudo apt-get -qy autoremove
 RUN sudo adduser --quiet jenkins && \
     echo "jenkins:password" | chpasswd && \
