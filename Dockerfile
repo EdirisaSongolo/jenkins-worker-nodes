@@ -7,6 +7,7 @@ RUN apt-get update && \
     mkdir -p /var/run/sshd && \
     apt-get install -qy openjdk-17-jdk openjdk-17-jre && \
 
+    apt-get install -y ca-certificates curl gnupg lsb-release && \
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - && \
     echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list && \
     apt-get update && \
