@@ -7,7 +7,7 @@ RUN apt-get update && \
     mkdir -p /var/run/sshd && \
     apt-get install -qy openjdk-17-jdk openjdk-17-jre && \
     apt install curl -y && \
-    apt-get -qy install docker.io %% \
+    apt-get -qy install docker.io && \
     sleep 5 && \
     COMPOSE_VERSION=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep 'tag_name' | cut -d\" -f4) && \
     curl -L https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose && \
