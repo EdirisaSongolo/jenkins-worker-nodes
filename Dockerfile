@@ -14,14 +14,12 @@ RUN apt-get install -y docker-ce docker-ce-cli containerd.io
 RUN curl -L "https://github.com/docker/compose/releases/download/2.30.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 RUN chmod +x /usr/local/bin/docker-compose
 RUN apt-get -qy autoremove
-RUN adduser --quiet jenkins && \
-    echo "jenkins:password" | chpasswd && \
-    mkdir /home/jenkins/.m2
+RUN adduser --quiet ubuntu && \
+    echo "ubuntu:password" | chpasswd
 
 COPY .ssh/authorized_keys /home/jenkins/.ssh/authorized_keys
 
-RUN chown -R jenkins:jenkins /home/jenkins/.m2/ && \
-    chown -R jenkins:jenkins /home/jenkins/.ssh/
+RUN chown -R ubuntu:ubuntu /home/jenkins/.ssh/
 
 EXPOSE 22
 VOLUME ["/var/run/docker.sock"]
