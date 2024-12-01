@@ -18,7 +18,6 @@ RUN adduser --quiet jenkins && \
     echo "jenkins:password" | chpasswd
 
 RUN usermod -a -G docker jenkins
-RUN chmod 666 /var/run/docker.sock
     
 COPY .ssh/authorized_keys /home/jenkins/.ssh/authorized_keys
 
