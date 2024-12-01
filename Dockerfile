@@ -16,11 +16,15 @@ RUN chmod +x /usr/local/bin/docker-compose
 RUN apt-get -qy autoremove
 RUN adduser --quiet jenkins && \
     echo "jenkins:password" | chpasswd
+
+RUN usermod -a -G docker jenkins
+RUN chmod 660 /var/run/docker.sock
     
 COPY .ssh/authorized_keys /home/jenkins/.ssh/authorized_keys
 
 RUN chown -R jenkins:jenkins /home/jenkins/.ssh/
 
 EXPOSE 22
+
 VOLUME ["/var/run/docker.sock"]
 CMD ["/usr/sbin/sshd", "-D"]
