@@ -13,6 +13,11 @@ RUN apt-get update
 RUN apt-get install -y docker-ce docker-ce-cli containerd.io
 RUN curl -L "https://github.com/docker/compose/releases/download/2.30.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 RUN chmod +x /usr/local/bin/docker-compose
+RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+RUN sudo install -o root -g root -m 0755 kubectl /usr/local/bin/Kubectl
+RUN curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+RUN sudo chmod 700 get_helm.sh
+RUN ./get_helm.sh
 RUN apt-get -qy autoremove
 RUN adduser --quiet jenkins && \
     echo "jenkins:password" | chpasswd
