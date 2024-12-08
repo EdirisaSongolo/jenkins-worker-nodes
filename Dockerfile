@@ -31,4 +31,7 @@ RUN chown -R jenkins:jenkins /home/jenkins/.ssh/
 EXPOSE 22
 
 VOLUME ["/var/run/docker.sock"]
+
+VOLUME ["/home/jenkins/.kube"]
+
 CMD ["/usr/sbin/sshd", "-D"]
