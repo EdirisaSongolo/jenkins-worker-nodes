@@ -33,6 +33,6 @@ EXPOSE 22
 
 VOLUME ["/var/run/docker.sock"]
 
-VOLUME ["/home/jenkins/.kube"]
+VOLUME ["/home/jenkins/.kube/config"]
 
 CMD ["/usr/sbin/sshd", "-D"]
