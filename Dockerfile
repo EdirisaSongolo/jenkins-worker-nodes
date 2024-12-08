@@ -3,7 +3,7 @@ FROM ubuntu:24.04
 RUN apt-get update
 RUN apt-get install -y ca-certificates curl gnupg
 RUN apt-get install -qy git
-RUN apt-get unzip
+RUN apt-get install unzip
 RUN apt-get install -qy openssh-server && \
     sed -i 's|session required pam_loginuid.so|session optional pam_loginud.so|g' /etc/pam.d/sshd && \
     mkdir -p /var/run/sshd
